@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdMob Ad Unit Name Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #313244;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 450px;
+        }
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #89b4fa;
+        }
+        h3 {
+            color: #b4befe;
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            background-color: #181825;
+            border: 1px solid #45475a;
+            color: #cdd6f4;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #89b4fa;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #181825;
+            border-radius: 5px;
+            text-align: center;
+            word-break: break-all;
+            border: 1px dashed #89b4fa;
+        }
+        .result-text {
+            font-size: 18px;
+            font-family: monospace;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .counter {
+            font-size: 12px;
+            color: #a6adc8;
+            margin-bottom: 15px;
+        }
+        .counter.error {
+            color: #f38ba8;
+            font-weight: bold;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        button {
+            flex: 1;
+            padding: 10px;
+            background-color: #89b4fa;
+            color: #1e1e2e;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #b4befe;
+        }
+        .btn-history {
+            background-color: #f38ba8;
+        }
+        .btn-history:hover {
+            background-color: #f5c2e7;
+        }
+        .btn-secondary {
+            background-color: #45475a;
+            color: #cdd6f4;
+        }
+        .btn-secondary:hover {
+            background-color: #585b70;
+        }
+        .hint {
+            font-size: 11px;
+            color: #a6adc8;
+            margin-top: 4px;
+        }
+        .history-box {
+            background-color: #181825;
+            border: 1px solid #45475a;
+            border-radius: 5px;
+            padding: 10px;
+            min-height: 50px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .history-item {
+            padding: 4px 0;
+            border-bottom: 1px solid #313244;
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>AdMob Name Generator</h2>
+    
+    <div class="form-group">
+        <label for="abbr">Название игры:</label>
+        <input type="text" id="abbr" value="Stretch Grid: Line Puzzle">
+        <div class="hint">Скрипт умно соберет аббревиатуру в зависимости от длины названия</div>
+    </div>
+
+    <div class="form-group">
+        <label for="platform">Платформа:</label>
+        <select id="platform">
+            <option value="AND">Android (AND)</option>
+            <option value="IOS">iOS (IOS)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="format">Формат рекламы:</label>
+        <select id="format">
+            <option value="BAN">Banner (BAN) | Баннер</option>
+            <option value="REW">Rewarded Video (REW) | Видео за вознаграждение</option>
+            <option value="INT">Interstitial (INT) | Межстраничная</option>
+            <option value="APP">App Open (APP) | При открытии</option>
+            <option value="NAT">Native (NAT) | Нативная</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="placement">Расположение:</label>
+        <select id="placement">
+            <option value="BottomMenu">BottomMenu | Нижнее меню</option>
+            <option value="TopMenu">TopMenu | Верхнее меню</option>
+            <option value="ExtraLevel">ExtraLevel | Дополнительный уровень</option>
+            <option value="Сoin">Coin | Дополнительные монеты</option>
+            <option value="Hint">Hint | Подсказка</option>
+            <option value="GameOver">GameOver | Конец игры (Проигрыш)</option>
+            <option value="Pause">Pause | Экран паузы</option>
+            <option value="Store">Store | Внутриигровой магазин</option>
+            <option value="LevelUp">LevelUp | Переход на новый уровень</option>
+            <option value="ExtraMoves">ExtraMoves | Дополнительные ходы</option>
+            <option value="DoubleCoin">DoubleCoin | Удвоение наград/монет</option>
+            <option value="Revive">Revive | Возрождение после проигрыша</option>
+        </select>
+    </div>
+
+    <h3>Дополнительные параметры (опционально)</h3>
+
+    <div class="form-group">
+        <label for="strategy">Стратегия eCPM:</label>
+        <select id="strategy">
+            <option value="">Нет (по умолчанию)</option>
+            <option value="High">High | Высокий Floor</option>
+            <option value="Med">Med | Средний Floor</option>
+            <option value="Floor50">Floor50 | Минимум $50</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="monetization">Тип монетизации:</label>
+        <select id="monetization">
+            <option value="">Нет (по умолчанию)</option>
+            <option value="Bidding">Bidding | Биндинг</option>
+            <option value="Waterfall">Waterfall | Водопад (прямой)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="abtest">А/Б Тестирование:</label>
+        <select id="abtest">
+            <option value="">Нет (по умолчанию)</option>
+            <option value="TestA">TestA | Вариант А</option>
+            <option value="TestB">TestB | Вариант Б</option>
+            <option value="Control">Control | Контрольная группа</option>
+        </select>
+    </div>
+
+    <div class="result-box">
+        <div class="result-text" id="result">Загрузка...</div>
+        <div class="counter" id="counter">0 / 80 символов</div>
+        
+        <div class="button-group">
+            <button onclick="copyToClipboard()" id="copyBtn">Копировать</button>
+            <button onclick="addToHistory()" class="btn-history">Добавить в список</button>
+        </div>
+    </div>
+
+    <h3>Сохраненная история</h3>
+    <div class="history-box" id="historyBox">
+        <!-- Сюда будут падать сохраненные названия -->
+    </div>
+    <div class="button-group">
+        <button onclick="copyHistory()" id="copyHistoryBtn">Скопировать весь список</button>
+        <button onclick="clearHistory()" class="btn-secondary">Очистить</button>
+    </div>
+
+</div>
+
+<script>
+    const abbrInput = document.getElementById('abbr');
+    const platformInput = document.getElementById('platform');
+    const formatInput = document.getElementById('format');
+    const placementInput = document.getElementById('placement');
+    const strategyInput = document.getElementById('strategy');
+    const monetizationInput = document.getElementById('monetization');
+    const abtestInput = document.getElementById('abtest');
+    const resultDiv = document.getElementById('result');
+    const counterDiv = document.getElementById('counter');
+    const copyBtn = document.getElementById('copyBtn');
+    const historyBox = document.getElementById('historyBox');
+    const copyHistoryBtn = document.getElementById('copyHistoryBtn');
+
+    let historyArray = [];
+
+    // Умная функция генерации аббревиатур
+    function getAcronym(str) {
+        str = str.trim();
+        if (!str) return "UNKNOWN";
+        
+        // Разбиваем строку, игнорируя тире, двоеточия, эмодзи и лишние пробелы
+        const words = str.split(/[\s\-\:—_]+/).filter(w => w.length > 0);
+        const count = words.length;
+
+        if (count === 0) return "UNKNOWN";
+
+        // Функция хелпер для правильного регистра (OnLi, SqPi и т.д.)
+        const capitalize = (word, len) => {
+            let part = word.substring(0, len);
+            if (part.length === 0) return "";
+            if (part.length === 1) return part.toUpperCase();
+            return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+        };
+
+        if (count === 1) {
+            // 1 слово: Weave -> Weav (4 буквы)
+            return capitalize(words[0], 4);
+        } 
+        else if (count === 2) {
+            // 2 слова: Swipe Dots -> SwDo (по 2 буквы)
+            return capitalize(words[0], 2) + capitalize(words[1], 2);
+        } 
+        else if (count === 3) {
+            // 3 слова: Dot Fighter Idle -> DoFI (2 буквы + 1 буква + 1 буква)
+            let w1 = capitalize(words[0], 2);
+            let w2 = words[1].charAt(0).toUpperCase();
+            let w3 = words[2].charAt(0).toUpperCase();
+            return w1 + w2 + w3;
+        } 
+        else {
+            // 4 и более слов: Stretch Grid: Line Puzzle -> SGLP (по 1 букве, все заглавные)
+            return words.map(w => w.charAt(0).toUpperCase()).join('');
+        }
+    }
+
+    function updateResult() {
+        const abbr = getAcronym(abbrInput.value);
+        const platform = platformInput.value;
+        const format = formatInput.value;
+        const placement = placementInput.value;
+        const strategy = strategyInput.value;
+        const monetization = monetizationInput.value;
+        const abtest = abtestInput.value;
+
+        // Собираем в массив и отфильтровываем пустые значения
+        const parts = [abbr, platform, format, placement, strategy, monetization, abtest];
+        const finalString = parts.filter(Boolean).join('_');
+
+        resultDiv.textContent = finalString;
+
+        const len = finalString.length;
+        counterDiv.textContent = `${len} / 80 символов`;
+
+        if (len > 80) {
+            counterDiv.classList.add('error');
+        } else {
+            counterDiv.classList.remove('error');
+        }
+    }
+
+    function copyToClipboard() {
+        const text = resultDiv.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = "Скопировано!";
+            copyBtn.style.backgroundColor = "#a6e3a1";
+            copyBtn.style.color = "#1e1e2e";
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.backgroundColor = "#89b4fa";
+            }, 1500);
+        });
+    }
+
+    function addToHistory() {
+        const currentName = resultDiv.textContent;
+        if (!historyArray.includes(currentName)) {
+            historyArray.push(currentName);
+            renderHistory();
+        }
+    }
+
+    function renderHistory() {
+        historyBox.innerHTML = '';
+        if (historyArray.length === 0) {
+            historyBox.innerHTML = '<span style="color: #585b70;">Список пуст...</span>';
+            return;
+        }
+        historyArray.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.textContent = item;
+            historyBox.appendChild(div);
+        });
+        historyBox.scrollTop = historyBox.scrollHeight;
+    }
+
+    function copyHistory() {
+        if (historyArray.length === 0) return;
+        const text = historyArray.join('\n');
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = copyHistoryBtn.textContent;
+            copyHistoryBtn.textContent = "Список скопирован!";
+            copyHistoryBtn.style.backgroundColor = "#a6e3a1";
+            copyHistoryBtn.style.color = "#1e1e2e";
+            setTimeout(() => {
+                copyHistoryBtn.textContent = originalText;
+                copyHistoryBtn.style.backgroundColor = "#89b4fa";
+            }, 1500);
+        });
+    }
+
+    function clearHistory() {
+        historyArray = [];
+        renderHistory();
+    }
+
+    // Слушатели событий для всех полей
+    const inputs = [abbrInput, platformInput, formatInput, placementInput, strategyInput, monetizationInput, abtestInput];
+    inputs.forEach(input => {
+        input.addEventListener('input', updateResult);
+        input.addEventListener('change', updateResult);
+    });
+    
+    // Инициализация при первой загрузке
+    updateResult();
+    renderHistory();
+</script>
+
+</body>
+</html>
